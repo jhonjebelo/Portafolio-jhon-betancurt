@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhon Edison Betancurt - Senior HubSpot Consultant</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .flag {
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .flag:hover {
+            transform: scale(1.1);
+        }
+
+        .flag.usa {
+            background: linear-gradient(to bottom, #b22234 0%, #b22234 7.69%, #ffffff 7.69%, #ffffff 15.38%, #b22234 15.38%, #b22234 23.07%, #ffffff 23.07%, #ffffff 30.76%, #b22234 30.76%, #b22234 38.45%, #ffffff 38.45%, #ffffff 46.14%, #b22234 46.14%, #b22234 53.83%, #ffffff 53.83%, #ffffff 61.52%, #b22234 61.52%, #b22234 69.21%, #ffffff 69.21%, #ffffff 76.9%, #b22234 76.9%, #b22234 84.59%, #ffffff 84.59%, #ffffff 92.28%, #b22234 92.28%);
+            position: relative;
+        }
+
+        .flag.usa::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 40%;
+            height: 53.8%;
+            background: #3c3b6e;
+        }
+
+        .flag.colombia {
+            background: linear-gradient(to bottom, #ffce00 0%, #ffce00 50%, #003893 50%, #003893 75%, #ce1126 75%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 60px 0;
+            color: white;
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            border: 5px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="35" r="20" fill="%23ddd"/><path d="M20 80 Q50 60 80 80 V100 H20 Z" fill="%23ddd"/></svg>') center/cover;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .header .location {
+            font-size: 1.1em;
+            opacity: 0.8;
+        }
+
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .nav-tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .nav-tab:hover {
+            background: #e9ecef;
+        }
+
+        .nav-tab.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .about-text {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            display: block;
+        }
+
+        .experience-item {
+            border-left: 4px solid #667eea;
+            padding-left: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .experience-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: #667eea;
+            border-radius: 50%;
+        }
+
+        .experience-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .experience-company {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .experience-date {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .experience-description {
+            margin-bottom: 15px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .skill-category h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .skill-tag {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .certifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .cert-item {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .cert-title {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .cert-issuer {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cert-date {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .recommendations {
+            display: grid;
+            gap: 30px;
+        }
+
+        .recommendation-item {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .recommendation-item::before {
+            content: '"';
+            font-size: 4em;
+            color: #667eea;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .recommendation-text {
+            font-style: italic;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            margin-left: 40px;
+        }
+
+        .recommendation-author {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .recommendation-position {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .contact-item {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-item i {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .contact-item h3 {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px;
+            background: #333;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="language-toggle">
+        <div class="flag usa" onclick="changeLanguage('en')" title="English"></div>
+        <div class="flag colombia" onclick="changeLanguage('es')" title="Español"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <div class="profile-img"></div>
+            <h1>Jhon Edison Betancurt Lora</h1>
+            <p class="subtitle" data-es="Senior HubSpot Consultant | Especialista en CRM y Automatización" data-en="Senior HubSpot Consultant | CRM & Automation Specialist">Senior HubSpot Consultant | Especialista en CRM y Automatización</p>
+            <p class="location" data-es="Armenia, Quindío, Colombia" data-en="Armenia, Quindío, Colombia">Armenia, Quindío, Colombia</p>
+        </header>
+
+        <main class="main-content">
+            <nav class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('about')" data-es="Acerca de" data-en="About">Acerca de</button>
+                <button class="nav-tab" onclick="showTab('experience')" data-es="Experiencia" data-en="Experience">Experiencia</button>
+                <button class="nav-tab" onclick="showTab('skills')" data-es="Habilidades" data-en="Skills">Habilidades</button>
+                <button class="nav-tab" onclick="showTab('certifications')" data-es="Certificaciones" data-en="Certifications">Certificaciones</button>
+                <button class="nav-tab" onclick="showTab('recommendations')" data-es="Recomendaciones" data-en="Recommendations">Recomendaciones</button>
+                <button class="nav-tab" onclick="showTab('contact')" data-es="Contacto" data-en="Contact">Contacto</button>
+            </nav>
+
+            <div id="about" class="tab-content active">
+                <div class="about-grid">
+                    <div class="about-text">
+                        <h2 data-es="Sobre Mí" data-en="About Me">Sobre Mí</h2>
+                        <p data-es="Actualmente presentando proyecto de grado para el programa de Ingeniería en Sistemas. Mi trayectoria incluye una destacada experiencia en el ámbito del servicio técnico, complementada con una especialización en la plataforma HubSpot (CRM), desarrollo web y creación de bots empresariales." data-en="Currently presenting final project for Systems Engineering program. My trajectory includes outstanding experience in technical service, complemented with specialization in HubSpot platform (CRM), web development and enterprise bot creation.">
+                            Actualmente presentando proyecto de grado para el programa de Ingeniería en Sistemas. Mi trayectoria incluye una destacada experiencia en el ámbito del servicio técnico, complementada con una especialización en la plataforma HubSpot (CRM), desarrollo web y creación de bots empresariales.
+                        </p>
+                        <p data-es="Cuento con tres años de experiencia en el campo de TI, lo que me ha brindado un profundo conocimiento de las soluciones tecnológicas y la capacidad para resolver problemas de manera eficiente. Mi expertise se extiende al análisis de datos, automatización de procesos y desarrollo web completo." data-en="I have three years of experience in the IT field, which has given me deep knowledge of technological solutions and the ability to solve problems efficiently. My expertise extends to data analysis, process automation and full web development.">
+                            Cuento con tres años de experiencia en el campo de TI, lo que me ha brindado un profundo conocimiento de las soluciones tecnológicas y la capacidad para resolver problemas de manera eficiente. Mi expertise se extiende al análisis de datos, automatización de procesos y desarrollo web completo.
+                        </p>
+                    </div>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-number">3+</span>
+                            <span data-es="Años en TI" data-en="Years in IT">Años en TI</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">15+</span>
+                            <span data-es="Certificaciones" data-en="Certifications">Certificaciones</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">174</span>
+                            <span data-es="Contactos" data-en="Contacts">Contactos</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">5+</span>
+                            <span data-es="Proyectos HubSpot" data-en="HubSpot Projects">Proyectos HubSpot</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="experience" class="tab-content">
+                <h2 data-es="Experiencia Profesional" data-en="Professional Experience">Experiencia Profesional</h2>
+                
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Senior Implementation Specialist" data-en="Senior Implementation Specialist">Senior Implementation Specialist</div>
+                    <div class="experience-company">Progresus</div>
+                    <div class="experience-date" data-es="Dic 2024 - Actualidad · 7 meses" data-en="Dec 2024 - Present · 7 months">Dic 2024 - Actualidad · 7 meses</div>
+                    <div class="experience-description" data-es="Senior consultor de CRM especializado en la integridad de la información y implementación de soluciones HubSpot." data-en="Senior CRM consultant specialized in information integrity and HubSpot solution implementation.">Senior consultor de CRM especializado en la integridad de la información y implementación de soluciones HubSpot.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="IT Support" data-en="IT Support">IT Support</div>
+                    <div class="experience-company">Global Link Studies · Jornada completa</div>
+                    <div class="experience-date" data-es="Jun 2024 - Actualidad · 1 año 1 mes | Canadá · En remoto" data-en="Jun 2024 - Present · 1 year 1 month | Canada · Remote">Jun 2024 - Actualidad · 1 año 1 mes | Canadá · En remoto</div>
+                    <div class="experience-description" data-es="Integración tecnológica, automatización de procesos, tecnología de la información, Google Workspace, HubSpot Marketing Hub, marketing automatizado, Zapier, análisis web, AMS." data-en="Technology integration, process automation, information technology, Google Workspace, HubSpot Marketing Hub, automated marketing, Zapier, web analysis, AMS.">Integración tecnológica, automatización de procesos, tecnología de la información, Google Workspace, HubSpot Marketing Hub, marketing automatizado, Zapier, análisis web, AMS.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="CRM Manager" data-en="CRM Manager">CRM Manager</div>
+                    <div class="experience-company">Alma Education Inc · Jornada completa</div>
+                    <div class="experience-date" data-es="Dic 2021 - Jun 2024 · 2 años 7 meses" data-en="Dec 2021 - Jun 2024 · 2 years 7 months">Dic 2021 - Jun 2024 · 2 años 7 meses</div>
+                    <div class="experience-description" data-es="Soporte técnico, integración tecnológica, automatización de procesos, tecnología de la información, análisis web, HubSpot Marketing Hub, HubSpot Sales Hub." data-en="Technical support, technology integration, process automation, information technology, web analysis, HubSpot Marketing Hub, HubSpot Sales Hub.">Soporte técnico, integración tecnológica, automatización de procesos, tecnología de la información, análisis web, HubSpot Marketing Hub, HubSpot Sales Hub.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Analista de Datos" data-en="Data Analyst">Analista de Datos</div>
+                    <div class="experience-company" data-es="Profesional Independiente" data-en="Independent Professional">Profesional Independiente</div>
+                    <div class="experience-date" data-es="May 2021 - Jun 2024 · 3 años 2 meses | Estados Unidos" data-en="May 2021 - Jun 2024 · 3 years 2 months | United States">May 2021 - Jun 2024 · 3 años 2 meses | Estados Unidos</div>
+                    <div class="experience-description" data-es="Google Data Studio, integración tecnológica, diseño de WordPress, HubSpot, tecnología de la información, análisis web, WordPress, gestión de relaciones con clientes (CRM), Microsoft Power BI, HubSpot Sales Hub." data-en="Google Data Studio, technology integration, WordPress design, HubSpot, information technology, web analysis, WordPress, customer relationship management (CRM), Microsoft Power BI, HubSpot Sales Hub.">Google Data Studio, integración tecnológica, diseño de WordPress, HubSpot, tecnología de la información, análisis web, WordPress, gestión de relaciones con clientes (CRM), Microsoft Power BI, HubSpot Sales Hub.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Administrador de Plataformas Virtuales" data-en="Virtual Platforms Administrator">Administrador de Plataformas Virtuales</div>
+                    <div class="experience-company">Genuinelab · Jornada completa</div>
+                    <div class="experience-date" data-es="May 2021 - Jun 2024 · 3 años 2 meses | Estados Unidos · En remoto" data-en="May 2021 - Jun 2024 · 3 years 2 months | United States · Remote">May 2021 - Jun 2024 · 3 años 2 meses | Estados Unidos · En remoto</div>
+                    <div class="experience-description" data-es="Administración de Microsoft Office 365, soporte técnico, integración tecnológica, automatización de procesos, tecnología de la información, análisis web, webmaster, HubSpot Marketing Hub, Google Ads, HubSpot Sales Hub." data-en="Microsoft Office 365 administration, technical support, technology integration, process automation, information technology, web analysis, webmaster, HubSpot Marketing Hub, Google Ads, HubSpot Sales Hub.">Administración de Microsoft Office 365, soporte técnico, integración tecnológica, automatización de procesos, tecnología de la información, análisis web, webmaster, HubSpot Marketing Hub, Google Ads, HubSpot Sales Hub.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Operaciones de Marketing y Ventas" data-en="Marketing and Sales Operations">Operaciones de Marketing y Ventas</div>
+                    <div class="experience-company">Genuine Digital School · Jornada completa</div>
+                    <div class="experience-date" data-es="May 2022 - May 2024 · 2 años 1 mes | En remoto" data-en="May 2022 - May 2024 · 2 years 1 month | Remote">May 2022 - May 2024 · 2 años 1 mes | En remoto</div>
+                    <div class="experience-description" data-es="Automatización de procesos para optimizar operaciones de marketing y ventas." data-en="Process automation to optimize marketing and sales operations.">Automatización de procesos para optimizar operaciones de marketing y ventas.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Desarrollo Landings en HubSpot y Página WordPress" data-en="HubSpot Landing Pages and WordPress Development">Desarrollo Landings en HubSpot y Página WordPress</div>
+                    <div class="experience-company">Freelance</div>
+                    <div class="experience-date" data-es="May 2021 - May 2024 · 3 años 1 mes" data-en="May 2021 - May 2024 · 3 years 1 month">May 2021 - May 2024 · 3 años 1 mes</div>
+                    <div class="experience-description" data-es="Soporte técnico, Elementor, integración tecnológica, hojas de estilos en cascada (CSS), HubSpot, tecnología de la información, JavaScript, análisis web, WordPress, HTML5, desarrollo web, HubSpot Sales Hub." data-en="Technical support, Elementor, technology integration, cascading style sheets (CSS), HubSpot, information technology, JavaScript, web analysis, WordPress, HTML5, web development, HubSpot Sales Hub.">Soporte técnico, Elementor, integración tecnológica, hojas de estilos en cascada (CSS), HubSpot, tecnología de la información, JavaScript, análisis web, WordPress, HTML5, desarrollo web, HubSpot Sales Hub.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Social Media Bot Developer" data-en="Social Media Bot Developer">Social Media Bot Developer</div>
+                    <div class="experience-company">Roccibella · Temporal</div>
+                    <div class="experience-date" data-es="Ene 2024 - Mar 2024 · 3 meses | Estados Unidos · En remoto" data-en="Jan 2024 - Mar 2024 · 3 months | United States · Remote">Ene 2024 - Mar 2024 · 3 meses | Estados Unidos · En remoto</div>
+                    <div class="experience-description" data-es="Desarrollo de bots para redes sociales enfocado en influencers usando Manychat y Notion." data-en="Social media bot development focused on influencers using Manychat and Notion.">Desarrollo de bots para redes sociales enfocado en influencers usando Manychat y Notion.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Consultor Técnico de HubSpot" data-en="HubSpot Technical Consultant">Consultor Técnico de HubSpot</div>
+                    <div class="experience-company">Laboratorio IH Colombia · Contrato temporal</div>
+                    <div class="experience-date" data-es="Sept 2023 - Nov 2023 · 3 meses | Colombia · En remoto" data-en="Sept 2023 - Nov 2023 · 3 months | Colombia · Remote">Sept 2023 - Nov 2023 · 3 meses | Colombia · En remoto</div>
+                    <div class="experience-description" data-es="Implementación del CRM HubSpot versión starter desde cero, capacitación al personal del uso de la herramienta. Soporte técnico, automatización de procesos, HubSpot, gestión de relaciones con clientes (CRM)." data-en="HubSpot CRM starter version implementation from scratch, staff training on tool usage. Technical support, process automation, HubSpot, customer relationship management (CRM).">Implementación del CRM HubSpot versión starter desde cero, capacitación al personal del uso de la herramienta. Soporte técnico, automatización de procesos, HubSpot, gestión de relaciones con clientes (CRM).</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Consultor Técnico HubSpot" data-en="HubSpot Technical Consultant">Consultor Técnico HubSpot</div>
+                    <div class="experience-company">Intextil SAS · Contrato temporal</div>
+                    <div class="experience-date" data-es="Sept 2023 - Nov 2023 · 3 meses | Colombia · En remoto" data-en="Sept 2023 - Nov 2023 · 3 months | Colombia · Remote">Sept 2023 - Nov 2023 · 3 meses | Colombia · En remoto</div>
+                    <div class="experience-description" data-es="Soporte técnico, automatización de procesos, HubSpot." data-en="Technical support, process automation, HubSpot.">Soporte técnico, automatización de procesos, HubSpot.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Especialista HubSpot" data-en="HubSpot Specialist">Especialista HubSpot</div>
+                    <div class="experience-company">Growbox Digital | HubSpot CRM Partners · Temporal</div>
+                    <div class="experience-date" data-es="Mar 2023 - Jun 2023 · 4 meses | En remoto" data-en="Mar 2023 - Jun 2023 · 4 months | Remote">Mar 2023 - Jun 2023 · 4 meses | En remoto</div>
+                    <div class="experience-description" data-es="Freelance en HubSpot. Social media bot developer, diseño de bases de datos, automatización de procesos, HubSpot, Landing." data-en="HubSpot freelance. Social media bot developer, database design, process automation, HubSpot, Landing.">Freelance en HubSpot. Social media bot developer, diseño de bases de datos, automatización de procesos, HubSpot, Landing.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Consultoría HubSpot" data-en="HubSpot Consulting">Consultoría HubSpot</div>
+                    <div class="experience-company">Muba Cosmetics · Temporal</div>
+                    <div class="experience-date" data-es="Mar 2023 - May 2023 · 3 meses | En remoto" data-en="Mar 2023 - May 2023 · 3 months | Remote">Mar 2023 - May 2023 · 3 meses | En remoto</div>
+                    <div class="experience-description" data-es="Freelance CRM HubSpot. Automatización de procesos." data-en="HubSpot CRM freelance. Process automation.">Freelance CRM HubSpot. Automatización de procesos.</div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-title" data-es="Soporte Técnico" data-en="Technical Support">Soporte Técnico</div>
+                    <div class="experience-company">UDiscover Virtual School · Jornada completa</div>
+                    <div class="experience-date" data-es="May 2021 - Oct 2022 · 1 año 6 meses | Bogotá, Distrito Capital, Colombia" data-en="May 2021 - Oct 2022 · 1 year 6 months | Bogotá, Capital District, Colombia">May 2021 - Oct 2022 · 1 año 6 meses | Bogotá, Distrito Capital, Colombia</div>
+                    <div class="experience-description" data-es="Soporte técnico, diseño de WordPress, HubSpot, tecnología de la información, WordPress, gestión de relaciones con clientes (CRM), Microsoft Power BI." data-en="Technical support, WordPress design, HubSpot, information technology, WordPress, customer relationship management (CRM), Microsoft Power BI.">Soporte técnico, diseño de WordPress, HubSpot, tecnología de la información, WordPress, gestión de relaciones con clientes (CRM), Microsoft Power BI.</div>
+                </div>
+            </div>
+
+            <div id="skills" class="tab-content">
+                <h2 data-es="Habilidades Técnicas" data-en="Technical Skills">Habilidades Técnicas</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3 data-es="CRM & Automatización" data-en="CRM & Automation">CRM & Automatización</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HubSpot</span>
+                            <span class="skill-tag">Zapier</span>
+                            <span class="skill-tag">Make</span>
+                            <span class="skill-tag">Workflows</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 data-es="Desarrollo Web" data-en="Web Development">Desarrollo Web</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">WordPress</span>
+                            <span class="skill-tag">Elementor</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 data-es="Programación" data-en="Programming">Programación</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">MySQL</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 data-es="Análisis de Datos" data-en="Data Analysis">Análisis de Datos</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Power BI</span>
+                            <span class="skill-tag">Looker Studio</span>
+                            <span class="skill-tag">Google Analytics</span>
+                            <span class="skill-tag">Google Ads</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 data-es="Herramientas" data-en="Tools">Herramientas</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Google Workspace</span>
+                            <span class="skill-tag">Microsoft Office 365</span>
+                            <span class="skill-tag">Notion</span>
+                            <span class="skill-tag">Manychat</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 data-es="Marketing Digital" data-en="Digital Marketing">Marketing Digital</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Inbound Marketing</span>
+                            <span class="skill-tag">Email Marketing</span>
+                            <span class="skill-tag">Social Media Bots</span>
+                            <span class="skill-tag">WhatsApp API</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="certifications" class="tab-content">
+                <h2 data-es="Certificaciones y Licencias" data-en="Certifications and Licenses">Certificaciones y Licencias</h2>
+                <div class="certifications-grid">
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="Certificación del software de ventas de HubSpot" data-en="HubSpot Sales Software Certification">Certificación del software de ventas de HubSpot</div>
+                        <div class="cert-issuer">HubSpot Academy</div>
+                        <div class="cert-date" data-es="Jun 2025 - Jul 2026" data-en="Jun 2025 - Jul 2026">Jun 2025 - Jul 2026</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="Software de Service Hub" data-en="Service Hub Software">Software de Service Hub</div>
+                        <div class="cert-issuer">HubSpot Academy</div>
+                        <div class="cert-date" data-es="May 2025 - Jun 2026" data-en="May 2025 - Jun 2026">May 2025 - Jun 2026</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="Ventas Inbound" data-en="Inbound Sales">Ventas Inbound</div>
+                        <div class="cert-issuer">HubSpot Academy</div>
+                        <div class="cert-date" data-es="May 2025 - Jun 2027" data-en="May 2025 - Jun 2027">May 2025 - Jun 2027</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="Inbound Marketing" data-en="Inbound Marketing">Inbound Marketing</div>
+                        <div class="cert-issuer">HubSpot Academy</div>
+                        <div class="cert-date" data-es="Mar 2025 - Abr 2027" data-en="Mar 2025 - Apr 2027">Mar 2025 - Abr 2027</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="CMS Hub para Marketers" data-en="CMS Hub for Marketers">CMS Hub para Marketers</div>
+                        <div class="cert-issuer">HubSpot Academy</div>
+                        <div class="cert-date" data-es="Ene 2025 - Feb 2026" data-en="Jan 2025 - Feb 2026">Ene 2025 - Feb 2026</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title">Make Foundation</div>
+                        <div class="cert-issuer">Make</div>
+                        <div class="cert-date" data-es="Ene 2025" data-en="Jan 2025">Ene 2025</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="Discovering Entrepreneurship" data-en="Discovering Entrepreneurship">Discovering Entrepreneurship</div>
+                        <div class="cert-issuer">Cisco</div>
+                        <div class="cert-date" data-es="Dic 2024" data-en="Dec 2024">Dic 2024</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="Introducción a C#" data-en="Introduction to C#">Introducción a C#</div>
+                        <div class="cert-issuer">Sololearn</div>
+                        <div class="cert-date" data-es="Oct 2024" data-en="Oct 2024">Oct 2024</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="SQL Intermedio" data-en="SQL Intermediate">SQL Intermedio</div>
+                        <div class="cert-issuer">Sololearn</div>
+                        <div class="cert-date" data-es="May 2024" data-en="May 2024">May 2024</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title">Power BI</div>
+                        <div class="cert-issuer">ZAKIDATA</div>
+                        <div class="cert-date" data-es="Abr 2024" data-en="Apr 2024">Abr 2024</div>
+                    </div>
+                    <div class="cert-item">
+                        <div class="cert-title" data-es="Programación Web desde Cero" data-en="Web Programming from Scratch">Programación Web desde Cero</div>
+                        <div class="cert-issuer">Egg Live</div>
+                        <div class="cert-date" data-es="Oct 2023" data-en="Oct 2023">Oct 2023</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="recommendations" class="tab-content">
+                <h2 data-es="Recomendaciones Profesionales" data-en="Professional Recommendations">Recomendaciones Profesionales</h2>
+                <div class="recommendations">
+                    <div class="recommendation-item">
+                        <div class="recommendation-text" data-es="Jhon es muy motivado y siempre está disponible para apoyar a sus colegas. También está continuamente dispuesto a investigar y aprender nuevas habilidades para mejorar su conocimiento y trabajo." data-en="Jhon is very motivated and always available to support his colleagues. He is also continuously willing to research and learn new skills to improve his knowledge and work.">
+                            Jhon es muy motivado y siempre está disponible para apoyar a sus colegas. También está continuamente dispuesto a investigar y aprender nuevas habilidades para mejorar su conocimiento y trabajo.
+                        </div>
+                        <div class="recommendation-author">Marcello Friedemann</div>
+                        <div class="recommendation-position">Co-Founder, COO & CFO</div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-text" data-es="Recomiendo a Jhon, persona idónea para realizar cualquier proyecto que represente un reto, en el ámbito personal tiene valores empresariales esenciales que son clave para cualquier equipo de trabajo; confío plenamente en su capacidad para afrontar cualquier trabajo en lo que desarrollo respecta." data-en="I recommend Jhon, ideal person to carry out any project that represents a challenge, in the personal sphere he has essential business values that are key for any work team; I fully trust his ability to face any work in what development concerns.">
+                            Recomiendo a Jhon, persona idónea para realizar cualquier proyecto que represente un reto, en el ámbito personal tiene valores empresariales esenciales que son clave para cualquier equipo de trabajo; confío plenamente en su capacidad para afrontar cualquier trabajo en lo que desarrollo respecta.
+                        </div>
+                        <div class="recommendation-author">Esneyder Morcillo Ocampo</div>
+                        <div class="recommendation-position">RPA Dev | Automation Anywhere 360 | UiPath | Power Platform</div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-text" data-es="Jhon es un analista de datos excepcional, capaz de conectar soluciones de TI y Marketing de manera impecable. Además de su habilidad técnica, es un compañero de trabajo increíble, siempre dispuesto a apoyar y resolver desafíos con profesionalismo y empatía. Lo recomiendo sin reservas para cualquier equipo que valore la excelencia y la colaboración. 🙌✨" data-en="Jhon is an exceptional data analyst, capable of connecting IT and Marketing solutions impeccably. In addition to his technical skill, he is an incredible work colleague, always willing to support and solve challenges with professionalism and empathy. I recommend him without reservations for any team that values excellence and collaboration. 🙌✨">
+                            Jhon es un analista de datos excepcional, capaz de conectar soluciones de TI y Marketing de manera impecable. Además de su habilidad técnica, es un compañero de trabajo increíble, siempre dispuesto a apoyar y resolver desafíos con profesionalismo y empatía. Lo recomiendo sin reservas para cualquier equipo que valore la excelencia y la colaboración. 🙌✨
+                        </div>
+                        <div class="recommendation-author">Tatiana Catherin Tellez</div>
+                        <div class="recommendation-position" data-es="Copywriter | Content Manager | Social Media | Storyteller" data-en="Copywriter | Content Manager | Social Media | Storyteller">Copywriter | Content Manager | Social Media | Storyteller</div>
+                    </div>
+                    
+                    <div class="recommendation-item">
+                        <div class="recommendation-text" data-es="Un profesional de calidad, tuve la oportunidad de trabajar en equipo y desde su experiencia en el aprendizaje y habilidades en tecnología logra resolver situaciones que se relacionaban con las áreas de Marketing y TI. Su gran desempeño es una inspiración de crecimiento profesional constante que comparto." data-en="A quality professional, I had the opportunity to work as a team and from his experience in learning and technology skills he manages to solve situations that were related to Marketing and IT areas. His great performance is an inspiration for constant professional growth that I share.">
+                            Un profesional de calidad, tuve la oportunidad de trabajar en equipo y desde su experiencia en el aprendizaje y habilidades en tecnología logra resolver situaciones que se relacionaban con las áreas de Marketing y TI. Su gran desempeño es una inspiración de crecimiento profesional constante que comparto.
+                        </div>
+                        <div class="recommendation-author">Jose Rodolfo Hermitaño Pajuelo</div>
+                        <div class="recommendation-position" data-es="Creative | UX / UI Designer | Graphic Designer | Content Manager | Web Developer" data-en="Creative | UX / UI Designer | Graphic Designer | Content Manager | Web Developer">Creative | UX / UI Designer | Graphic Designer | Content Manager | Web Developer</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contact" class="tab-content">
+                <h2 data-es="Contacto" data-en="Contact">Contacto</h2>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <h3>LinkedIn</h3>
+                        <p data-es="Conecta conmigo profesionalmente" data-en="Connect with me professionally">Conecta conmigo profesionalmente</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p data-es="Envíame un mensaje" data-en="Send me a message">Envíame un mensaje</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <h3>WhatsApp</h3>
+                        <p data-es="Conversemos por WhatsApp" data-en="Let's chat on WhatsApp">Conversemos por WhatsApp</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-github"></i>
+                        <h3>GitHub</h3>
+                        <p data-es="Mira mis proyectos" data-en="Check out my projects">Mira mis proyectos</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3 data-es="Ubicación" data-en="Location">Ubicación</h3>
+                        <p>Armenia, Quindío, Colombia</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-globe"></i>
+                        <h3 data-es="Disponibilidad" data-en="Availability">Disponibilidad</h3>
+                        <p data-es="Remoto & Presencial" data-en="Remote & On-site">Remoto & Presencial</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p data-es="© 2025 Jhon Edison Betancurt Lora. Todos los derechos reservados." data-en="© 2025 Jhon Edison Betancurt Lora. All rights reserved.">© 2025 Jhon Edison Betancurt Lora. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        let currentLanguage = 'es';
+
+        function showTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Remove active class from all nav tabs
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked nav tab
+            event.target.classList.add('active');
+        }
+
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Get all elements with data attributes for translation
+            const elements = document.querySelectorAll('[data-es], [data-en]');
+            
+            elements.forEach(element => {
+                if (lang === 'es' && element.dataset.es) {
+                    element.textContent = element.dataset.es;
+                } else if (lang === 'en' && element.dataset.en) {
+                    element.textContent = element.dataset.en;
+                }
+            });
+
+            // Update document language
+            document.documentElement.lang = lang;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default language
+            changeLanguage('es');
+        });
+
+        // Add smooth scrolling and animations
+        function addScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            const elements = document.querySelectorAll('.experience-item, .cert-item, .recommendation-item, .contact-item');
+            elements.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', addScrollAnimations);
+    </script>
+</body>
+</html>
